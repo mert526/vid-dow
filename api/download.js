@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // CORS ayarları
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -18,15 +17,20 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'URL gerekli' });
   }
 
-  // Demo response - Gerçek indirme için yt-dlp gerekir
+  // Kullanıcıyı gerçek indirme sitesine yönlendir
+  const downloadSites = {
+    'MP4': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`,
+    'MP3': `https://ytmp3.nu/youtube-to-mp3/?url=${encodeURIComponent(url)}`,
+    'MP4 HD': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`,
+    'WAV': `https://ytmp3.nu/youtube-to-mp3/?url=${encodeURIComponent(url)}`,
+    '3GP': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`,
+    'FLV': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`
+  };
+
   return res.json({
     success: true,
-    message: 'Video hazırlanıyor...',
-    downloadUrl: '#',
-    info: {
-      title: 'Demo Video',
-      format: format,
-      note: 'Gerçek indirme için yt-dlp entegrasyonu gerekir'
-    }
+    redirect: true,
+    downloadUrl: downloadSites[format] || downloadSites['MP4'],
+    message: `${format} için indirme sayfası açılıyor...`
   });
 }
