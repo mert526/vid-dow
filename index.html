@@ -263,10 +263,12 @@
         
         const data = await response.json();
         
-        if (data.success) {
-            alert(`${t.downloading} ${label} ${quality}...\n\n${data.message}`);
+        if (data.success && data.redirect) {
+            // Yeni sekmede indirme sitesini aç
+            window.open(data.downloadUrl, '_blank');
+            alert(`${label} ${quality} indirme sayfası açıldı!`);
         } else {
-            alert('Hata: ' + data.error);
+            alert('Hata: ' + (data.error || 'Bilinmeyen hata'));
         }
     } catch (error) {
         alert('Bağlantı hatası: ' + error.message);
