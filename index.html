@@ -245,10 +245,33 @@
             `).join('');
         }
 
-        function handleDownload(label, quality) {
-            const t = translations[currentLang];
-            alert(`${t.downloading} ${label} ${quality}...\n\n${t.demo}`);
+        async function handleDownload(label, quality) {
+    const t = translations[currentLang];
+    const url = document.getElementById('urlInput').value;
+    
+    if (!url) {
+        alert('Lütfen önce bir video URL\'si girin!');
+        return;
+    }
+    
+    try {
+        const response = await fetch('https://vid-dow.vercel.app/api/download', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: url, format: label })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert(`${t.downloading} ${label} ${quality}...\n\n${data.message}`);
+        } else {
+            alert('Hata: ' + data.error);
         }
+    } catch (error) {
+        alert('Bağlantı hatası: ' + error.message);
+    }
+}
 
         document.getElementById('langButton').addEventListener('click', () => {
             document.getElementById('langMenu').classList.toggle('hidden');
