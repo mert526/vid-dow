@@ -19,10 +19,10 @@ export default async function handler(req, res) {
 
   // Kullanıcıyı gerçek indirme sitesine yönlendir
   const downloadSites = {
-    'MP4': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`,
     'MP3': `https://ytmp3.nu/youtube-to-mp3/?url=${encodeURIComponent(url)}`,
-    'MP4 HD': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`,
     'WAV': `https://ytmp3.nu/youtube-to-mp3/?url=${encodeURIComponent(url)}`,
+    'MP4': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`,
+    'MP4 HD': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`,
     '3GP': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`,
     'FLV': `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`
   };
